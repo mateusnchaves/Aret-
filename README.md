@@ -45,6 +45,12 @@ npx supabase db push --remote
 
 No painel do Supabase: **Authentication → Sign In / Providers → Google**, com o Client ID e o Secret criados no Google Cloud Console. Em **Authentication → URL Configuration**, adicione `http://localhost:5173` e a URL de produção às Redirect URLs.
 
+### Deploy (Vercel)
+
+1. Importe o repositório na [Vercel](https://vercel.com/new). O `vercel.json` já define o build do Vite e as rotas da SPA.
+2. Em **Environment Variables**, adicione `VITE_SUPABASE_URL`, `VITE_SUPABASE_PUBLISHABLE_KEY` e, se usar Google, `VITE_AUTH_GOOGLE_ENABLED=true`.
+3. No Supabase, em **Authentication → URL Configuration**, troque a **Site URL** pela URL da Vercel e mantenha `http://localhost:5173` nas Redirect URLs.
+
 ## Scripts
 
 | Comando | O que faz |
