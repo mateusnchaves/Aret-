@@ -66,6 +66,16 @@ export async function createExercise(name: string, muscleGroup: MuscleGroup): Pr
   ) as Exercise
 }
 
+/** Só exercícios próprios: o RLS bloqueia alterações no catálogo. */
+export async function updateExercise(id: string, patch: { name: string; muscle_group: MuscleGroup }): Promise<void> {
+  unwrap(await supabase.from('exercises').update({ name: patch.name.trim(), muscle_group: patch.muscle_group }).eq('id', id))
+}
+
+/** Apaga o exercício próprio; histórico de carga e vínculos com fichas vão junto (cascade). */
+export async function deleteExercise(id: string): Promise<void> {
+  unwrap(await supabase.from('exercises').delete().eq('id', id))
+}
+
 // ───────────── Fichas ─────────────
 
 export async function listWorkouts(): Promise<Workout[]> {

@@ -1,5 +1,5 @@
 import { useMemo, useState, type FormEvent } from 'react'
-import { useNavigate, useParams } from 'react-router'
+import { Link, useNavigate, useParams } from 'react-router'
 import { IconArchive, IconMoveDown, IconMoveUp, IconPlus, IconTrash } from '@/components/icons'
 import { SubHeader } from '@/components/layout'
 import { Button } from '@/components/ui/button'
@@ -142,7 +142,9 @@ function ExerciseList({ workout, onAdd }: { workout: Workout; onAdd: () => void 
             return (
               <li key={we.id} className="flex min-h-13 items-center gap-1">
                 <span className="w-6 text-sm text-faint tabular">{i + 1}</span>
-                <span className="flex-1 truncate text-[15px]">{ex?.name ?? '…'}</span>
+                <Link to={`/treino/exercicios/${we.exercise_id}`} className="flex-1 truncate text-[15px] text-text no-underline hover:text-accent-hi">
+                  {ex?.name ?? '…'}
+                </Link>
                 <Button variant="ghost" size="icon" aria-label="Subir" disabled={busy || i === 0} onClick={() => move(i, -1)}>
                   <IconMoveUp size={18} />
                 </Button>

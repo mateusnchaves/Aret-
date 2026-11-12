@@ -8,6 +8,7 @@ import { ErrorNote } from '@/components/ui/form'
 import { Card, EmptyState, Eyebrow, Spinner } from '@/components/ui/surface'
 import { useTrainingOverview } from '@/features/data'
 import { StagnationBadge } from '@/features/training/components'
+import { ExerciseSheet } from '@/features/training/ExerciseSheet'
 import { stalenessText } from '@/features/training/staleness'
 import { LoadChart } from '@/features/training/LoadChart'
 import { LoadSheet } from '@/features/training/LoadSheet'
@@ -20,6 +21,7 @@ export function ExercisePage() {
   const { id = '' } = useParams()
   const { data, isPending, error, checkins } = useTrainingOverview()
   const [sheet, setSheet] = useState<{ editing?: LoadEntry } | null>(null)
+  const [editingExercise, setEditingExercise] = useState(false)
 
   if (isPending) return <Spinner />
   if (error || !data) return <ErrorNote error={error ?? 'Não foi possível carregar.'} />
@@ -36,7 +38,17 @@ export function ExercisePage() {
 
   return (
     <>
-      <SubHeader back="/treino" context={[MUSCLE_GROUPS[exercise.muscle_group], ...workoutNames].join(' · ')} />
+      <SubHeader
+        back="/treino"
+        context={[MUSCLE_GROUPS[exercise.muscle_group], ...workoutNames].join(' · ')}
+        actions={
+          exercise.user_id && (
+            <Button variant="ghost" size="icon" aria-label="Editar exercício" onClick={() => setEditingExercise(true)}>
+              <IconPencil size={18} />
+            </Button>
+          )
+        }
+      />
 
       <h1 className="m-0 font-display text-[28px] leading-tight font-semibold">{exercise.name}</h1>
 
@@ -116,6 +128,15 @@ export function ExercisePage() {
         current={current}
         editing={sheet?.editing}
       />
+
+      {exercise.user_id && (
+        <ExerciseSheet
+          open={editingExercise}
+          onClose={() => setEditingExercise(false)}
+          exercise={exercise}
+          entryCount={entries.length}
+        />
+      )}
     </>
   )
 }
