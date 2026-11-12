@@ -2,7 +2,7 @@
 
 > *Areté* (ἀρετή): a excelência alcançada pela prática constante.
 
-**PT-BR** · [English](#english)
+**PT-BR** · [English](#english) · **App:** [aret-one.vercel.app](https://aret-one.vercel.app)
 
 PWA pessoal para acompanhar **progressão de carga**, **cardio** e **alimentação**. Em vez de marcar cada série na academia, você só registra quando a carga muda, e o Areté mostra a evolução, há quanto tempo você está parado em cada carga e quais exercícios pedem atenção.
 
