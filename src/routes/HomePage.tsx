@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button'
 import { ErrorNote } from '@/components/ui/form'
 import { Card, Eyebrow, Spinner } from '@/components/ui/surface'
 import { useProfile, useTrainingOverview } from '@/features/data'
+import { CardioCard } from '@/features/cardio/CardioCard'
 import { CheckinButton } from '@/features/training/CheckinButton'
 import { StagnationBadge } from '@/features/training/components'
 import { daysBetween, formatWeekdayDate, relativeDays, todayISO } from '@/lib/dates'
@@ -114,12 +115,7 @@ export function HomePage() {
           )}
 
           <div className="grid grid-cols-2 gap-3">
-            <Link to="/cardio" className="no-underline">
-              <Card className="flex h-full flex-col gap-2 p-4 text-text">
-                <Eyebrow>Cardio</Eyebrow>
-                <span className="text-sm text-muted">Meta semanal chega na fase 2.</span>
-              </Card>
-            </Link>
+            <CardioCard />
             <Link to="/alimentacao" className="no-underline">
               <Card className="flex h-full flex-col gap-2 p-4 text-text">
                 <Eyebrow>Alimentação</Eyebrow>

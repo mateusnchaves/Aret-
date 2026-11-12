@@ -10,8 +10,8 @@ PWA pessoal para acompanhar **progressão de carga**, **cardio** e **alimentaç�
 
 | Fase | Escopo | Status |
 |---|---|---|
-| 1 | Treino: fichas, histórico de carga, check-in, estagnação, progressão | ✅ em andamento |
-| 2 | Cardio: registro, calorias por MET, meta semanal | ⏳ |
+| 1 | Treino: fichas, histórico de carga, check-in, estagnação, progressão | ✅ |
+| 2 | Cardio: registro, calorias por MET, meta semanal | ✅ |
 | 3 | Alimentação: dietas, diário, macros com a tabela TACO | ⏳ |
 | 4 | IA (Gemini): lançar refeição em texto livre, importar dieta | ⏳ |
 
@@ -72,4 +72,4 @@ Personal PWA to track **strength progression**, **cardio** and **nutrition**. In
 
 **Run locally:** `npm install`, copy `.env.example` to `.env.local` with your Supabase URL and publishable key, apply the migrations with `npx supabase db push --remote`, then `npm run dev`.
 
-**Roadmap:** phase 1 (training) in progress; phase 2 cardio, phase 3 nutrition (Brazilian TACO food table), phase 4 AI meal logging with Gemini. Full spec (Portuguese) in [`SPEC.md`](SPEC.md).
+**Roadmap:** phase 1 (training) and phase 2 (cardio) done; phase 3 nutrition (Brazilian TACO food table), phase 4 AI meal logging with Gemini. Full spec (Portuguese) in [`SPEC.md`](SPEC.md).

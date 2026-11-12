@@ -118,6 +118,8 @@ function ProfileForm({ profile }: { profile: Profile }) {
     activity_level: profile.activity_level ?? 'moderate',
     goal: profile.goal ?? 'maintain',
     stagnation_threshold: String(profile.stagnation_threshold),
+    cardio_goal_unit: profile.cardio_goal_unit,
+    cardio_goal_value: String(profile.cardio_goal_value),
   })
   const [saved, setSaved] = useState(false)
   const set = (patch: Partial<typeof form>) => {
@@ -127,7 +129,16 @@ function ProfileForm({ profile }: { profile: Profile }) {
 
   const height = parseDecimal(form.height_cm)
   const threshold = Number.parseInt(form.stagnation_threshold, 10)
-  const valid = height !== null && height >= 80 && height <= 260 && threshold >= 1 && threshold <= 50 && Boolean(form.birth_date)
+  const cardioGoal = Number.parseInt(form.cardio_goal_value, 10)
+  const valid =
+    height !== null &&
+    height >= 80 &&
+    height <= 260 &&
+    threshold >= 1 &&
+    threshold <= 50 &&
+    cardioGoal >= 1 &&
+    cardioGoal <= 20000 &&
+    Boolean(form.birth_date)
 
   function submit(e: FormEvent) {
     e.preventDefault()
@@ -139,6 +150,8 @@ function ProfileForm({ profile }: { profile: Profile }) {
         activity_level: form.activity_level as ActivityLevel,
         goal: form.goal as Goal,
         stagnation_threshold: threshold,
+        cardio_goal_unit: form.cardio_goal_unit,
+        cardio_goal_value: cardioGoal,
       },
       { onSuccess: () => setSaved(true) },
     )
@@ -194,6 +207,36 @@ function ProfileForm({ profile }: { profile: Profile }) {
             />
           )}
         </Field>
+        <div className="grid grid-cols-2 gap-3">
+          <Field label="Meta semanal de cardio">
+            {(p) => (
+              <Input
+                {...p}
+                type="number"
+                inputMode="numeric"
+                min={1}
+                value={form.cardio_goal_value}
+                onChange={(e) => set({ cardio_goal_value: e.target.value })}
+              />
+            )}
+          </Field>
+          <Field label="Unidade">
+            {(p) => (
+              <Select
+                {...p}
+                value={form.cardio_goal_unit}
+                onChange={(e) => {
+                  const unit = e.target.value as 'minutes' | 'kcal'
+                  // Trocar de unidade sugere um valor de partida coerente.
+                  set({ cardio_goal_unit: unit, cardio_goal_value: unit === 'minutes' ? '150' : '2000' })
+                }}
+              >
+                <option value="minutes">minutos</option>
+                <option value="kcal">kcal</option>
+              </Select>
+            )}
+          </Field>
+        </div>
         <ErrorNote error={update.error} />
         <Button type="submit" disabled={!valid || update.isPending}>
           {update.isPending ? 'Salvando…' : saved ? 'Salvo' : 'Salvar'}

@@ -4,7 +4,7 @@
  */
 import { todayISO, type ISODate } from './dates'
 import { supabase } from './supabase'
-import type { Checkin, Exercise, LoadEntry, MuscleGroup, Profile, WeightEntry, Workout } from './types'
+import type { CardioSession, Checkin, Exercise, LoadEntry, MuscleGroup, Profile, WeightEntry, Workout } from './types'
 
 function unwrap<T = unknown>(result: { data: unknown; error: { message: string } | null }): T {
   if (result.error) throw new Error(result.error.message)
@@ -175,16 +175,46 @@ export async function deleteCheckin(id: string): Promise<void> {
   unwrap(await supabase.from('checkins').delete().eq('id', id))
 }
 
+// ───────────── Cardio ─────────────
+
+const CARDIO_COLUMNS = 'id, done_on, kind, intensity, duration_min, distance_km, kcal, kcal_manual, note, created_at'
+
+export async function listCardioSessions(): Promise<CardioSession[]> {
+  const rows = unwrap(
+    await supabase
+      .from('cardio_sessions')
+      .select(CARDIO_COLUMNS)
+      .order('done_on', { ascending: false })
+      .order('created_at', { ascending: false }),
+  ) as CardioSession[]
+  return rows.map((r) => ({ ...r, distance_km: r.distance_km == null ? null : Number(r.distance_km) }))
+}
+
+export type CardioInput = Omit<CardioSession, 'id' | 'created_at'>
+
+export async function addCardioSession(input: CardioInput): Promise<void> {
+  unwrap(await supabase.from('cardio_sessions').insert(input))
+}
+
+export async function updateCardioSession(id: string, input: CardioInput): Promise<void> {
+  unwrap(await supabase.from('cardio_sessions').update(input).eq('id', id))
+}
+
+export async function deleteCardioSession(id: string): Promise<void> {
+  unwrap(await supabase.from('cardio_sessions').delete().eq('id', id))
+}
+
 // ───────────── Conta ─────────────
 
 export async function exportMyData(userId: string) {
-  const [profile, weights, exercises, workouts, loadEntries, checkins] = await Promise.all([
+  const [profile, weights, exercises, workouts, loadEntries, checkins, cardio] = await Promise.all([
     getProfile(userId),
     listWeights(),
     listExercises(),
     listWorkouts(),
     listLoadEntries(),
     listCheckins(),
+    listCardioSessions(),
   ])
   return {
     app: 'arete',
@@ -195,6 +225,7 @@ export async function exportMyData(userId: string) {
     workouts,
     load_entries: loadEntries,
     checkins,
+    cardio_sessions: cardio,
   }
 }
 

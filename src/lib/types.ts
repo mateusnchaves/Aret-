@@ -1,4 +1,5 @@
 import type { ISODate } from './dates'
+import type { CardioKind, Intensity } from './cardio'
 import type { ActivityLevel, Goal, Sex } from './nutrition'
 
 export interface Profile {
@@ -77,5 +78,18 @@ export interface Checkin {
   id: string
   workout_id: string
   done_on: ISODate
+  created_at: string
+}
+
+export interface CardioSession {
+  id: string
+  done_on: ISODate
+  kind: CardioKind
+  intensity: Intensity
+  duration_min: number
+  distance_km: number | null
+  kcal: number
+  kcal_manual: boolean
+  note: string | null
   created_at: string
 }

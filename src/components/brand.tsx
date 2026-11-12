@@ -74,7 +74,8 @@ export function Ring({
     <div className="relative shrink-0" style={{ width: size, height: size }}>
       <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} role="img" aria-label={label}>
         <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke="var(--color-line)" strokeWidth={stroke} />
-        <circle
+        {/* Sem progresso, a ponta arredondada viraria um ponto solto: não desenha. */}
+        {clamped > 0 && <circle
           cx={size / 2}
           cy={size / 2}
           r={r}
@@ -85,7 +86,7 @@ export function Ring({
           strokeDasharray={`${clamped * c} ${c}`}
           transform={`rotate(-90 ${size / 2} ${size / 2})`}
           className="transition-[stroke-dasharray] duration-700 ease-out"
-        />
+        />}
       </svg>
       <div className="absolute inset-0 flex flex-col items-center justify-center">{children}</div>
     </div>

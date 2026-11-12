@@ -23,6 +23,11 @@ export const keys = {
   workouts: ['workouts'] as const,
   loadEntries: ['load-entries'] as const,
   checkins: ['checkins'] as const,
+  cardio: ['cardio'] as const,
+}
+
+export function useCardioSessions() {
+  return useQuery({ queryKey: keys.cardio, queryFn: api.listCardioSessions })
 }
 
 // ───────────── Leituras ─────────────

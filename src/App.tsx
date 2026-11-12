@@ -7,6 +7,7 @@ import { AuthProvider } from '@/features/auth/AuthProvider'
 import { useAuth } from '@/features/auth/context'
 import { useProfile } from '@/features/data'
 import { isSupabaseConfigured } from '@/lib/supabase'
+import { CardioPage } from '@/routes/CardioPage'
 import { HomePage } from '@/routes/HomePage'
 import { LoginPage } from '@/routes/LoginPage'
 import { ComingSoonPage, NotFoundPage, SetupPage } from '@/routes/misc'
@@ -66,11 +67,7 @@ const router = createBrowserRouter([
               },
               {
                 path: 'cardio',
-                element: (
-                  <ComingSoonPage title="Cardio" phase={2}>
-                    Registro de cardio com cálculo de calorias e meta semanal.
-                  </ComingSoonPage>
-                ),
+                element: <CardioPage />,
               },
               {
                 path: 'alimentacao',
