@@ -1,6 +1,7 @@
-import type { ReactNode } from 'react'
+import { Suspense, type ReactNode } from 'react'
 import { Link, NavLink, Outlet } from 'react-router'
 import { cn } from '@/lib/cn'
+import { Spinner } from './ui/surface'
 import { IconBack, IconDumbbell, IconFork, IconHome, IconPulse, IconUser } from './icons'
 
 const NAV = [
@@ -16,7 +17,9 @@ export function AppShell() {
   return (
     <div className="mx-auto min-h-dvh max-w-md">
       <main className="px-5 pt-[max(3rem,env(safe-area-inset-top))] pb-32">
-        <Outlet />
+        <Suspense fallback={<Spinner />}>
+          <Outlet />
+        </Suspense>
       </main>
       <nav
         aria-label="Navegação principal"

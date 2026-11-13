@@ -6,6 +6,7 @@ import { ErrorNote } from '@/components/ui/form'
 import { Card, Eyebrow, Spinner } from '@/components/ui/surface'
 import { useProfile, useTrainingOverview } from '@/features/data'
 import { CardioCard } from '@/features/cardio/CardioCard'
+import { NutritionCard } from '@/features/nutrition/NutritionCard'
 import { CheckinButton } from '@/features/training/CheckinButton'
 import { StagnationBadge } from '@/features/training/components'
 import { daysBetween, formatWeekdayDate, relativeDays, todayISO } from '@/lib/dates'
@@ -116,12 +117,7 @@ export function HomePage() {
 
           <div className="grid grid-cols-2 gap-3">
             <CardioCard />
-            <Link to="/alimentacao" className="no-underline">
-              <Card className="flex h-full flex-col gap-2 p-4 text-text">
-                <Eyebrow>Alimentação</Eyebrow>
-                <span className="text-sm text-muted">Calorias e macros chegam na fase 3.</span>
-              </Card>
-            </Link>
+            <NutritionCard />
           </div>
         </>
       )}

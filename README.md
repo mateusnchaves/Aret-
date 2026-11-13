@@ -12,7 +12,7 @@ PWA pessoal para acompanhar **progressão de carga**, **cardio** e **alimentaç�
 |---|---|---|
 | 1 | Treino: fichas, histórico de carga, check-in, estagnação, progressão | ✅ |
 | 2 | Cardio: registro, calorias por MET, meta semanal | ✅ |
-| 3 | Alimentação: dietas, diário, macros com a tabela TACO | ⏳ |
+| 3 | Alimentação: dietas, diário, macros com a tabela TACO | ✅ |
 | 4 | IA (Gemini): lançar refeição em texto livre, importar dieta | ⏳ |
 
 Especificação completa em [`SPEC.md`](SPEC.md).
@@ -68,6 +68,10 @@ No painel do Supabase: **Authentication → Sign In / Providers → Google**, co
 - **Online para gravar, cache para consultar.** O service worker guarda as leituras do Supabase (network-first), então dá para ver suas cargas sem sinal na academia.
 - **RLS em tudo.** Cada usuário só lê e escreve as próprias linhas; o catálogo de exercícios (`user_id` nulo) é só leitura.
 
+## Créditos
+
+Valores nutricionais da **TACO**: NEPA – UNICAMP. *Tabela brasileira de composição de alimentos*. 4. ed. rev. e ampl. Campinas: NEPA-UNICAMP, 2011. CSVs obtidos de [raulfdm/taco-api](https://github.com/raulfdm/taco-api); a migration é gerada por [`scripts/taco-to-sql.mjs`](scripts/taco-to-sql.mjs).
+
 ---
 
 ## English
@@ -78,4 +82,4 @@ Personal PWA to track **strength progression**, **cardio** and **nutrition**. In
 
 **Run locally:** `npm install`, copy `.env.example` to `.env.local` with your Supabase URL and publishable key, apply the migrations with `npx supabase db push --remote`, then `npm run dev`.
 
-**Roadmap:** phase 1 (training) and phase 2 (cardio) done; phase 3 nutrition (Brazilian TACO food table), phase 4 AI meal logging with Gemini. Full spec (Portuguese) in [`SPEC.md`](SPEC.md).
+**Roadmap:** phases 1 (training), 2 (cardio) and 3 (nutrition, Brazilian TACO food table) done; phase 4 AI meal logging with Gemini. Full spec (Portuguese) in [`SPEC.md`](SPEC.md).

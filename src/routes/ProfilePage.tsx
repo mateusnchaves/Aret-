@@ -6,10 +6,11 @@ import { ErrorNote, Field, Input, Select } from '@/components/ui/form'
 import { Card, Eyebrow, Spinner } from '@/components/ui/surface'
 import { useAuth, useUserId } from '@/features/auth/context'
 import { keys, useInvalidatingMutation, useProfile, useUpdateProfile, useWeights } from '@/features/data'
+import { MealSlotsCard, TargetsCard } from '@/features/nutrition/ProfileNutrition'
 import * as api from '@/lib/api'
 import { formatShortDate, todayISO } from '@/lib/dates'
-import { formatInt, formatKg, parseDecimal } from '@/lib/format'
-import { ACTIVITY_LABELS, ageOn, dailyTargets, GOAL_LABELS, type ActivityLevel, type Goal } from '@/lib/nutrition'
+import { formatKg, parseDecimal } from '@/lib/format'
+import { ACTIVITY_LABELS, GOAL_LABELS, type ActivityLevel, type Goal } from '@/lib/nutrition'
 import { supabase } from '@/lib/supabase'
 import type { Profile } from '@/lib/types'
 
@@ -24,35 +25,13 @@ export function ProfilePage() {
     <>
       <PageTitle>Perfil</PageTitle>
       <div className="flex flex-col gap-4">
-        <TargetsCard profile={profile.data} weightKg={weights.data[0]?.weight_kg} />
+        <TargetsCard key={`t-${profile.data.id}`} profile={profile.data} />
         <WeightCard />
         <ProfileForm key={profile.data.id} profile={profile.data} />
+        <MealSlotsCard />
         <AccountCard />
       </div>
     </>
-  )
-}
-
-function TargetsCard({ profile, weightKg }: { profile: Profile; weightKg: number | undefined }) {
-  if (!profile.sex || !profile.birth_date || !profile.height_cm || !profile.activity_level || !profile.goal || !weightKg) return null
-  const t = dailyTargets({
-    sex: profile.sex,
-    age: ageOn(profile.birth_date, todayISO()),
-    heightCm: profile.height_cm,
-    weightKg,
-    activity: profile.activity_level,
-    goal: profile.goal,
-  })
-  return (
-    <Card className="flex flex-col gap-2">
-      <Eyebrow>Meta diária calculada</Eyebrow>
-      <p className="m-0 font-display text-3xl font-semibold tabular">
-        {formatInt(t.kcal)} <span className="font-sans text-sm font-normal text-muted">kcal</span>
-      </p>
-      <p className="m-0 text-sm text-text-2 tabular">
-        P {t.proteinG} g · C {t.carbsG} g · G {t.fatG} g
-      </p>
-    </Card>
   )
 }
 

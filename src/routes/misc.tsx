@@ -1,17 +1,7 @@
 import { Link } from 'react-router'
 import { Logo, Meander } from '@/components/brand'
-import { PageTitle } from '@/components/layout'
 import { Button } from '@/components/ui/button'
 import { EmptyState } from '@/components/ui/surface'
-
-export function ComingSoonPage({ title, phase, children }: { title: string; phase: number; children: React.ReactNode }) {
-  return (
-    <>
-      <PageTitle>{title}</PageTitle>
-      <EmptyState title={`Chega na fase ${phase}`}>{children}</EmptyState>
-    </>
-  )
-}
 
 export function NotFoundPage() {
   return (

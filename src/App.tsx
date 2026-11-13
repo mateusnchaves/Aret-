@@ -1,5 +1,5 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { lazy, Suspense } from 'react'
+import { lazy } from 'react'
 import { createBrowserRouter, Navigate, Outlet, RouterProvider, useLocation } from 'react-router'
 import { AppShell } from '@/components/layout'
 import { Spinner } from '@/components/ui/surface'
@@ -7,17 +7,21 @@ import { AuthProvider } from '@/features/auth/AuthProvider'
 import { useAuth } from '@/features/auth/context'
 import { useProfile } from '@/features/data'
 import { isSupabaseConfigured } from '@/lib/supabase'
-import { CardioPage } from '@/routes/CardioPage'
 import { HomePage } from '@/routes/HomePage'
 import { LoginPage } from '@/routes/LoginPage'
-import { ComingSoonPage, NotFoundPage, SetupPage } from '@/routes/misc'
+import { NotFoundPage, SetupPage } from '@/routes/misc'
 import { OnboardingPage } from '@/routes/OnboardingPage'
-import { ProfilePage } from '@/routes/ProfilePage'
 import { TrainingPage } from '@/routes/TrainingPage'
-import { WorkoutEditPage } from '@/routes/WorkoutEditPage'
 
-// A tela de progressão carrega o Recharts: fica num chunk separado.
+// Telas fora do Início carregam sob demanda (o Recharts, por exemplo, só vem com a progressão).
+// O <Suspense> fica no AppShell, em volta do <Outlet />.
 const ExercisePage = lazy(() => import('@/routes/ExercisePage').then((m) => ({ default: m.ExercisePage })))
+const WorkoutEditPage = lazy(() => import('@/routes/WorkoutEditPage').then((m) => ({ default: m.WorkoutEditPage })))
+const CardioPage = lazy(() => import('@/routes/CardioPage').then((m) => ({ default: m.CardioPage })))
+const NutritionDayPage = lazy(() => import('@/routes/NutritionDayPage').then((m) => ({ default: m.NutritionDayPage })))
+const DietsPage = lazy(() => import('@/routes/DietsPage').then((m) => ({ default: m.DietsPage })))
+const DietEditPage = lazy(() => import('@/routes/DietEditPage').then((m) => ({ default: m.DietEditPage })))
+const ProfilePage = lazy(() => import('@/routes/ProfilePage').then((m) => ({ default: m.ProfilePage })))
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -57,26 +61,11 @@ const router = createBrowserRouter([
               { path: 'treino', element: <TrainingPage /> },
               { path: 'treino/fichas/nova', element: <WorkoutEditPage /> },
               { path: 'treino/fichas/:id', element: <WorkoutEditPage /> },
-              {
-                path: 'treino/exercicios/:id',
-                element: (
-                  <Suspense fallback={<Spinner />}>
-                    <ExercisePage />
-                  </Suspense>
-                ),
-              },
-              {
-                path: 'cardio',
-                element: <CardioPage />,
-              },
-              {
-                path: 'alimentacao',
-                element: (
-                  <ComingSoonPage title="Alimentação" phase={3}>
-                    Dietas, diário de refeições e macros com a tabela TACO.
-                  </ComingSoonPage>
-                ),
-              },
+              { path: 'treino/exercicios/:id', element: <ExercisePage /> },
+              { path: 'cardio', element: <CardioPage /> },
+              { path: 'alimentacao', element: <NutritionDayPage /> },
+              { path: 'alimentacao/dietas', element: <DietsPage /> },
+              { path: 'alimentacao/dietas/:id', element: <DietEditPage /> },
               { path: 'perfil', element: <ProfilePage /> },
               { path: '*', element: <NotFoundPage /> },
             ],

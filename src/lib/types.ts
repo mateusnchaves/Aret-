@@ -14,6 +14,11 @@ export interface Profile {
   cardio_goal_unit: 'minutes' | 'kcal'
   cardio_goal_value: number
   onboarded_at: string | null
+  /** Metas manuais de alimentação; null = usar o cálculo. */
+  kcal_target: number | null
+  protein_target_g: number | null
+  carbs_target_g: number | null
+  fat_target_g: number | null
   created_at: string
 }
 
@@ -92,4 +97,83 @@ export interface CardioSession {
   kcal_manual: boolean
   note: string | null
   created_at: string
+}
+
+// ───────────── Alimentação ─────────────
+
+export interface Food {
+  id: string
+  user_id: string | null
+  taco_id: number | null
+  category_id: number | null
+  name: string
+  /** por 100 g */
+  kcal: number
+  protein_g: number
+  carbs_g: number
+  fat_g: number
+  fiber_g: number | null
+}
+
+export interface FoodPortion {
+  id: string
+  food_id: string
+  label: string
+  grams: number
+}
+
+export interface MealSlot {
+  id: string
+  name: string
+  position: number
+  archived_at: string | null
+}
+
+/** Quantidade de um alimento: sempre em gramas, opcionalmente lembrando a medida caseira usada. */
+export interface Amount {
+  grams: number
+  portion_label: string | null
+  portion_qty: number | null
+}
+
+export interface DietItem extends Amount {
+  id: string
+  diet_id: string
+  meal_slot_id: string
+  food_id: string
+  position: number
+}
+
+export interface Diet {
+  id: string
+  name: string
+  is_active: boolean
+  created_at: string
+  diet_items: DietItem[]
+}
+
+export interface DiaryEntry extends Amount {
+  id: string
+  eaten_on: ISODate
+  meal_slot_id: string
+  food_id: string | null
+  food_name: string
+  kcal: number
+  protein_g: number
+  carbs_g: number
+  fat_g: number
+  from_diet_id: string | null
+  created_at: string
+}
+
+export interface ComboItem extends Amount {
+  id: string
+  food_id: string
+  position: number
+}
+
+export interface Combo {
+  id: string
+  name: string
+  combo_items: ComboItem[]
 }

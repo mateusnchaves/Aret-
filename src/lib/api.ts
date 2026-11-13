@@ -3,13 +3,11 @@
  * para o TanStack Query tratar. O RLS garante que só as linhas do usuário voltam.
  */
 import { todayISO, type ISODate } from './dates'
+import { exportNutrition } from './api-nutrition'
+import { unwrap } from './db'
 import { supabase } from './supabase'
 import type { CardioSession, Checkin, Exercise, LoadEntry, MuscleGroup, Profile, WeightEntry, Workout } from './types'
 
-function unwrap<T = unknown>(result: { data: unknown; error: { message: string } | null }): T {
-  if (result.error) throw new Error(result.error.message)
-  return result.data as T
-}
 
 const num = (v: unknown) => Number(v)
 
@@ -216,6 +214,7 @@ export async function exportMyData(userId: string) {
     listCheckins(),
     listCardioSessions(),
   ])
+  const nutrition = await exportNutrition()
   return {
     app: 'arete',
     exported_at: new Date().toISOString(),
@@ -226,6 +225,7 @@ export async function exportMyData(userId: string) {
     load_entries: loadEntries,
     checkins,
     cardio_sessions: cardio,
+    nutrition,
   }
 }
 
