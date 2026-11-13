@@ -169,6 +169,16 @@ export async function deleteDiaryEntries(ids: string[]): Promise<void> {
   unwrap(await supabase.from('diary_entries').delete().in('id', ids))
 }
 
+/** kcal por dia num período (inclusive), para a coroa da semana e o mapa de constância. */
+export async function kcalByDay(from: ISODate, to: ISODate): Promise<Map<ISODate, number>> {
+  const rows = unwrap<{ eaten_on: ISODate; kcal: number }[]>(
+    await supabase.from('diary_entries').select('eaten_on, kcal').gte('eaten_on', from).lte('eaten_on', to).range(0, 9999),
+  )
+  const map = new Map<ISODate, number>()
+  for (const r of rows) map.set(r.eaten_on, (map.get(r.eaten_on) ?? 0) + Number(r.kcal))
+  return map
+}
+
 /** Últimos alimentos usados, mais recente primeiro, sem repetir. */
 export async function listRecentFoodIds(limit = 15): Promise<string[]> {
   const rows = unwrap<{ food_id: string | null }[]>(

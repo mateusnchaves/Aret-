@@ -11,6 +11,8 @@ export interface Profile {
   activity_level: ActivityLevel | null
   goal: Goal | null
   stagnation_threshold: number
+  /** Treinos por semana para a semana contar na sequência de disciplina. */
+  training_week_target: number
   cardio_goal_unit: 'minutes' | 'kcal'
   cardio_goal_value: number
   onboarded_at: string | null

@@ -1,19 +1,39 @@
 import { useEffect, useRef, type ComponentProps, type ReactNode } from 'react'
 import { cn } from '@/lib/cn'
+import { ColumnArt } from '../brand'
 import { IconClose } from '../icons'
 
-export function Card({ className, ...props }: ComponentProps<'section'>) {
-  return <section className={cn('rounded-[20px] border border-line bg-surface p-4.5', className)} {...props} />
+/** `hero` = card de destaque: gradiente quente, borda de luz dourada e sombra. */
+export function Card({ className, hero, ...props }: ComponentProps<'section'> & { hero?: boolean }) {
+  return (
+    <section
+      className={cn(
+        'rounded-[22px] border p-4.5',
+        hero
+          ? 'gold-edge border-[#3a2e26] bg-[linear-gradient(160deg,#2a1e17_0%,#1e1a17_70%)] shadow-[0_12px_30px_rgba(0,0,0,0.35)]'
+          : 'border-line bg-surface',
+        className,
+      )}
+      {...props}
+    />
+  )
 }
 
 export function Eyebrow({ className, ...props }: ComponentProps<'span'>) {
   return <span className={cn('eyebrow', className)} {...props} />
 }
 
-export function Spinner({ label = 'Carregando' }: { label?: string }) {
+/** Carregamento: formas dos cards pulsando devagar, no lugar da rodinha. */
+export function Spinner({ label = 'Carregando', rows = 3 }: { label?: string; rows?: number }) {
   return (
-    <div role="status" className="flex justify-center py-12">
-      <span className="size-6 animate-spin rounded-full border-2 border-line-strong border-t-accent" />
+    <div role="status" className="flex flex-col gap-3 py-2">
+      {Array.from({ length: rows }, (_, i) => (
+        <div
+          key={i}
+          className="rounded-[22px] bg-surface"
+          style={{ height: i === 0 ? 132 : 76, animation: `skeleton 1.6s ease-in-out ${i * 120}ms infinite` }}
+        />
+      ))}
       <span className="sr-only">{label}</span>
     </div>
   )
@@ -21,8 +41,9 @@ export function Spinner({ label = 'Carregando' }: { label?: string }) {
 
 export function EmptyState({ title, children, action }: { title: string; children?: ReactNode; action?: ReactNode }) {
   return (
-    <div className="flex flex-col items-center gap-3 rounded-[20px] border border-dashed border-line-strong px-6 py-10 text-center">
-      <p className="m-0 font-display text-xl font-semibold">{title}</p>
+    <div className="flex flex-col items-center gap-3 rounded-[22px] border border-line bg-surface/60 px-6 py-9 text-center">
+      <ColumnArt />
+      <p className="inscription m-0 text-lg font-semibold">{title}</p>
       {children && <div className="text-sm text-muted">{children}</div>}
       {action}
     </div>

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router'
 import { IconArchive, IconPencil, IconPlus } from '@/components/icons'
+import { Laurel } from '@/components/brand'
 import { PageTitle } from '@/components/layout'
 import { Button } from '@/components/ui/button'
 import { ErrorNote } from '@/components/ui/form'
@@ -23,12 +24,19 @@ export function TrainingPage() {
     <>
       <PageTitle
         aside={
-          <Button asChild size="sm" variant="outline">
-            <Link to="/treino/fichas/nova" className="no-underline">
-              <IconPlus size={18} />
-              Nova ficha
-            </Link>
-          </Button>
+          <div className="flex gap-2">
+            <Button asChild size="icon" variant="outline" className="border-bronze-line text-bronze">
+              <Link to="/treino/panteao" aria-label="Panteão: seus recordes" className="no-underline">
+                <Laurel size={20} />
+              </Link>
+            </Button>
+            <Button asChild size="sm" variant="outline">
+              <Link to="/treino/fichas/nova" className="no-underline">
+                <IconPlus size={18} />
+                Nova ficha
+              </Link>
+            </Button>
+          </div>
         }
       >
         Treino

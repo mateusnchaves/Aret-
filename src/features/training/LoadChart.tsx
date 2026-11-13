@@ -25,6 +25,7 @@ export function LoadChart({ entries }: { entries: LoadEntry[] }) {
   if (last && now > last.t) points.push({ ...last, t: now, label: 'hoje', isNow: true })
 
   const loads = points.map((p) => p.load)
+  const peakIndex = points.findIndex((p) => p.load === Math.max(...loads) && !p.isNow)
   const min = Math.min(...loads)
   const max = Math.max(...loads)
   // Marcas do eixo em múltiplos "de anilha" (2,5 / 5 / 10…), no máximo ~5 linhas.
@@ -78,15 +79,24 @@ export function LoadChart({ entries }: { entries: LoadEntry[] }) {
           <Line
             type="stepAfter"
             dataKey="load"
-            stroke="var(--color-accent)"
+            stroke="var(--color-accent-hi)"
             strokeWidth={2.5}
             isAnimationActive
             animationDuration={600}
             dot={(props: { cx?: number; cy?: number; index?: number; payload?: Point }) => {
               const { cx, cy, index, payload } = props
               if (cx === undefined || cy === undefined || payload?.isNow) return <g key={`d-${index}`} />
+              // O ponto mais alto (a primeira vez que a carga máxima apareceu) ganha a cor da glória.
+              if (index === peakIndex && ascending.length >= 2) {
+                return (
+                  <g key={`d-${index}`}>
+                    <circle cx={cx} cy={cy} r={11} fill="var(--color-bronze)" opacity={0.18} />
+                    <circle cx={cx} cy={cy} r={5.5} fill="var(--color-bronze)" stroke="var(--color-bg)" strokeWidth={2} />
+                  </g>
+                )
+              }
               return (
-                <circle key={`d-${index}`} cx={cx} cy={cy} r={4} fill="var(--color-bg)" stroke="var(--color-accent)" strokeWidth={2} />
+                <circle key={`d-${index}`} cx={cx} cy={cy} r={4} fill="var(--color-bg)" stroke="var(--color-accent-hi)" strokeWidth={2} />
               )
             }}
             activeDot={{ r: 5, fill: 'var(--color-accent)', stroke: 'var(--color-bg)' }}

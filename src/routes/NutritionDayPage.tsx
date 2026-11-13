@@ -1,7 +1,7 @@
 import { useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
 import { Link, useSearchParams } from 'react-router'
-import { Laurel, Ring } from '@/components/brand'
+import { CountUp, Laurel, Ring } from '@/components/brand'
 import { IconBack, IconCheck, IconChevronRight, IconPlus } from '@/components/icons'
 import { PageTitle } from '@/components/layout'
 import { Button } from '@/components/ui/button'
@@ -21,7 +21,7 @@ import {
   useNutritionTargets,
 } from '@/features/nutrition/data'
 import { FoodPicker } from '@/features/nutrition/FoodPicker'
-import { MacroBars } from '@/features/nutrition/MacroBars'
+import { MacroColumns } from '@/features/nutrition/MacroColumns'
 import * as api from '@/lib/api-nutrition'
 import { addDays } from '@/lib/cardio'
 import { cn } from '@/lib/cn'
@@ -57,7 +57,7 @@ export function NutritionDayPage() {
 
   const refresh = () =>
     Promise.all([
-      queryClient.invalidateQueries({ queryKey: nkeys.diary(date) }),
+      queryClient.invalidateQueries({ queryKey: nkeys.diaryAll }),
       queryClient.invalidateQueries({ queryKey: nkeys.recents }),
     ])
 
@@ -151,10 +151,19 @@ function DaySummary({ total, targets }: { total: ReturnType<typeof totalOf>; tar
   const left = targets.kcal - total.kcal
   const status = adherence(total.kcal, targets.kcal)
   return (
-    <Card className="flex items-center gap-4">
-      <Ring value={total.kcal / targets.kcal} size={120} stroke={10} label={`${formatInt(total.kcal)} de ${formatInt(targets.kcal)} kcal`}>
-        <span className="font-display text-[26px] leading-none font-semibold tabular">{formatInt(total.kcal)}</span>
-        <span className="mt-0.5 text-[11px] text-muted">de {formatInt(targets.kcal)} kcal</span>
+    <Card hero className="flex items-center gap-1.5 px-3.5 py-4">
+      <Ring
+        value={total.kcal / targets.kcal}
+        size={168}
+        stroke={11}
+        color={status === 'ok' ? 'var(--color-bronze)' : 'var(--color-accent-hi)'}
+        wreath={{ color: status === 'ok' ? 'var(--color-bronze)' : 'var(--color-laurel)', lit: Math.min(1, total.kcal / targets.kcal) }}
+        label={`${formatInt(total.kcal)} de ${formatInt(targets.kcal)} kcal`}
+      >
+        <span className="font-display text-[30px] leading-none font-semibold tabular">
+          <CountUp value={total.kcal} format={formatInt} />
+        </span>
+        <span className="mt-1 text-[11px] text-muted">de {formatInt(targets.kcal)} kcal</span>
         {status === 'ok' ? (
           <span className="mt-0.5 flex items-center gap-1 text-[11px] font-semibold text-bronze">
             <Laurel size={12} />
@@ -166,7 +175,7 @@ function DaySummary({ total, targets }: { total: ReturnType<typeof totalOf>; tar
           </span>
         )}
       </Ring>
-      <MacroBars total={total} targets={targets} className="flex-1" />
+      <MacroColumns total={total} targets={targets} />
     </Card>
   )
 }
@@ -247,7 +256,7 @@ function MealCard({
             aria-hidden="true"
             className={cn(
               'flex size-[22px] shrink-0 items-center justify-center rounded-full',
-              done ? 'bg-accent text-on-accent' : 'border-[1.5px] border-accent',
+              done ? 'bg-laurel text-on-laurel' : 'border-[1.5px] border-accent',
               entries.length === 0 && !done && 'border-line-strong',
             )}
           >
@@ -255,7 +264,7 @@ function MealCard({
           </span>
           <div className="flex min-w-0 flex-col">
             <h2 className="m-0 truncate text-[15px] font-medium">{slot.name}</h2>
-            {ateFromDiet && <span className="text-xs text-muted">da dieta</span>}
+            {ateFromDiet && <span className="text-xs text-laurel">da dieta</span>}
             {entries.length === 0 && dietItems.length > 0 && <span className="text-xs text-muted">dieta: {formatInt(dietKcal)} kcal</span>}
           </div>
         </div>

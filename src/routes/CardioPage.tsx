@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Laurel, Ring } from '@/components/brand'
 import { IconChevronRight, IconPlus } from '@/components/icons'
-import { PageTitle } from '@/components/layout'
+import { FloatingAction, PageTitle } from '@/components/layout'
 import { Button } from '@/components/ui/button'
 import { ErrorNote } from '@/components/ui/form'
 import { Card, EmptyState, Eyebrow, Spinner } from '@/components/ui/surface'
@@ -41,7 +41,7 @@ export function CardioPage() {
         </div>
 
         <div className="flex items-center gap-5">
-          <Ring value={data.ratio} size={112} stroke={10} label={`${formatInt(data.done)} de ${formatInt(data.goal)} ${unitLabel(unit)} na semana`}>
+          <Ring value={data.ratio} size={124} stroke={9} color={data.reached ? 'var(--color-bronze)' : 'var(--color-accent)'} wreath={{ color: data.reached ? 'var(--color-bronze)' : 'var(--color-laurel)', lit: data.ratio }} label={`${formatInt(data.done)} de ${formatInt(data.goal)} ${unitLabel(unit)} na semana`}>
             <span className="font-display text-2xl leading-none font-semibold tabular">{Math.min(999, Math.round(data.ratio * 100))}%</span>
           </Ring>
           <div className="flex flex-col gap-1">
@@ -134,13 +134,12 @@ export function CardioPage() {
         </ul>
       )}
 
-      <div className="h-16" aria-hidden="true" />
-      <div className="fixed inset-x-0 bottom-[calc(5.5rem+env(safe-area-inset-bottom))] z-10 mx-auto max-w-md px-5">
-        <Button size="lg" className="w-full shadow-[0_8px_24px_rgba(0,0,0,0.45)]" onClick={() => setSheet({})}>
+      <FloatingAction>
+        <Button size="lg" className="w-full" onClick={() => setSheet({})}>
           <IconPlus size={18} />
           Registrar cardio
         </Button>
-      </div>
+      </FloatingAction>
 
       <CardioSheet open={sheet !== null} onClose={() => setSheet(null)} editing={sheet?.editing} />
     </>

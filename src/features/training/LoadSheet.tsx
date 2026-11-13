@@ -7,6 +7,7 @@ import * as api from '@/lib/api'
 import { todayISO } from '@/lib/dates'
 import { formatKg, parseDecimal } from '@/lib/format'
 import { hapticSuccess } from '@/lib/haptics'
+import { wouldBePr } from '@/lib/glory'
 import { isChange } from '@/lib/training'
 import type { LoadEntry } from '@/lib/types'
 import { keys, useInvalidatingMutation } from '../data'
@@ -22,12 +23,17 @@ export function LoadSheet({
   exerciseId,
   current,
   editing,
+  entries,
+  onRecord,
 }: {
   open: boolean
   onClose: () => void
   exerciseId: string
   current: LoadEntry | undefined
   editing?: LoadEntry
+  /** Histórico do exercício, para saber se a carga nova é recorde. */
+  entries: LoadEntry[]
+  onRecord?: (info: { loadKg: number; previousKg: number; mark: number }) => void
 }) {
   return (
     <Sheet open={open} onClose={onClose} title={editing ? 'Corrigir registro' : current ? 'Nova carga' : 'Carga inicial'}>
@@ -36,6 +42,8 @@ export function LoadSheet({
         exerciseId={exerciseId}
         current={current}
         editing={editing}
+        entries={entries}
+        onRecord={onRecord}
         onDone={onClose}
       />
     </Sheet>
@@ -46,11 +54,15 @@ function LoadForm({
   exerciseId,
   current,
   editing,
+  entries,
+  onRecord,
   onDone,
 }: {
   exerciseId: string
   current: LoadEntry | undefined
   editing?: LoadEntry
+  entries: LoadEntry[]
+  onRecord?: (info: { loadKg: number; previousKg: number; mark: number }) => void
   onDone: () => void
 }) {
   const base = editing ?? current
@@ -83,9 +95,12 @@ function LoadForm({
 
   function submit(e: FormEvent) {
     e.preventDefault()
+    const record = !editing && loadKg !== null && wouldBePr(entries, loadKg)
+    const previousKg = Math.max(...entries.map((x) => x.load_kg))
     save.mutate(undefined, {
       onSuccess: () => {
-        hapticSuccess()
+        if (record && loadKg !== null) onRecord?.({ loadKg, previousKg, mark: entries.length + 1 })
+        else hapticSuccess()
         onDone()
       },
     })

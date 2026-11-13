@@ -165,3 +165,56 @@ export const IconGoogle = ({ size = 18 }: { size?: number }) => (
     <path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.4-.4-3.5z" />
   </svg>
 )
+
+// ───────────── Navegação (Visual 2.0): ícones temáticos ─────────────
+
+/** Templo: o Início. */
+export const IconTemple = (p: IconProps) => (
+  <Icon {...p}>
+    <path d="M3 9l9-6 9 6" />
+    <path d="M5 9v10M9.5 9v10M14.5 9v10M19 9v10" />
+    <path d="M3 21h18" />
+  </Icon>
+)
+
+/** Tocha olímpica: o Cardio. */
+export const IconTorch = (p: IconProps) => (
+  <Icon {...p}>
+    <path d="M12 2c2 2.2 2.6 3.9 1.6 5.6-.5.8-1.6 1.4-1.6 1.4s-1.1-.6-1.6-1.4C9.4 5.9 10 4.2 12 2z" />
+    <path d="M8 10h8l-2 4h-4z" />
+    <path d="M10.5 14l.5 8h2l.5-8" />
+  </Icon>
+)
+
+/** Ânfora: a Alimentação. */
+export const IconAmphora = (p: IconProps) => (
+  <Icon {...p}>
+    <path d="M9 3h6" />
+    <path d="M10 3v3c-3 1.5-4.5 4.5-4 8 .4 3 2.6 5.5 6 7 3.4-1.5 5.6-4 6-7 .5-3.5-1-6.5-4-8V3" />
+    <path d="M10 7.5c-2.5-.5-4 .5-4.5 2" />
+    <path d="M14 7.5c2.5-.5 4 .5 4.5 2" />
+    <path d="M7 13h10" />
+  </Icon>
+)
+
+/** Busto de perfil: o Perfil. */
+export const IconBust = (p: IconProps) => (
+  <Icon {...p}>
+    <path d="M9 21v-3.5c-2-.8-3-2.6-3-4.6C6 9 8.7 4 13 4c3.3 0 5 2.4 5 5 0 1.4-.4 2.2-1.2 3l1.2 2.2-1.6.6.2 1.7c.1 1-.7 1.5-1.6 1.5H14v3" />
+    <path d="M6 21h12" />
+  </Icon>
+)
+
+export const IconStar = ({ filled, ...p }: IconProps & { filled?: boolean }) => (
+  <Icon {...p} fill={filled ? 'currentColor' : 'none'}>
+    <path d="M12 3l2.8 5.8 6.2.9-4.5 4.4 1.1 6.3L12 17.4l-5.6 3 1.1-6.3L3 9.7l6.2-.9z" />
+  </Icon>
+)
+
+export const IconShare = (p: IconProps) => (
+  <Icon {...p}>
+    <path d="M12 3v12" />
+    <path d="M7 8l5-5 5 5" />
+    <path d="M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6" />
+  </Icon>
+)

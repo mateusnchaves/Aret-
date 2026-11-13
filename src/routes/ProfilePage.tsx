@@ -97,6 +97,7 @@ function ProfileForm({ profile }: { profile: Profile }) {
     activity_level: profile.activity_level ?? 'moderate',
     goal: profile.goal ?? 'maintain',
     stagnation_threshold: String(profile.stagnation_threshold),
+    training_week_target: String(profile.training_week_target ?? 3),
     cardio_goal_unit: profile.cardio_goal_unit,
     cardio_goal_value: String(profile.cardio_goal_value),
   })
@@ -108,6 +109,7 @@ function ProfileForm({ profile }: { profile: Profile }) {
 
   const height = parseDecimal(form.height_cm)
   const threshold = Number.parseInt(form.stagnation_threshold, 10)
+  const weekTarget = Number.parseInt(form.training_week_target, 10)
   const cardioGoal = Number.parseInt(form.cardio_goal_value, 10)
   const valid =
     height !== null &&
@@ -116,6 +118,8 @@ function ProfileForm({ profile }: { profile: Profile }) {
     threshold >= 1 &&
     threshold <= 50 &&
     cardioGoal >= 1 &&
+    weekTarget >= 1 &&
+    weekTarget <= 14 &&
     cardioGoal <= 20000 &&
     Boolean(form.birth_date)
 
@@ -129,6 +133,7 @@ function ProfileForm({ profile }: { profile: Profile }) {
         activity_level: form.activity_level as ActivityLevel,
         goal: form.goal as Goal,
         stagnation_threshold: threshold,
+        training_week_target: weekTarget,
         cardio_goal_unit: form.cardio_goal_unit,
         cardio_goal_value: cardioGoal,
       },
@@ -171,6 +176,11 @@ function ProfileForm({ profile }: { profile: Profile }) {
                 </option>
               ))}
             </Select>
+          )}
+        </Field>
+        <Field label="Treinos por semana" hint="Meta da sequência de disciplina e do ramo de treino da coroa.">
+          {(p) => (
+            <Input {...p} type="number" inputMode="numeric" min={1} max={14} value={form.training_week_target} onChange={(e) => set({ training_week_target: e.target.value })} />
           )}
         </Field>
         <Field label="Alerta de estagnação" hint="Quantos treinos sem evoluir até o exercício ser destacado.">

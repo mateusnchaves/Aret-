@@ -8,7 +8,10 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        primary: 'bg-accent text-on-accent hover:bg-accent-hi',
+        primary:
+          'bg-[linear-gradient(180deg,#e5895d_0%,var(--color-accent-deep)_100%)] text-on-accent font-bold shadow-[0_6px_18px_rgba(217,119,74,0.25),inset_0_1px_0_rgba(255,255,255,0.3)] hover:brightness-110',
+        laurel:
+          'bg-[linear-gradient(180deg,var(--color-laurel-hi)_0%,var(--color-laurel)_100%)] text-on-laurel font-bold shadow-[0_6px_18px_rgba(140,192,132,0.22),inset_0_1px_0_rgba(255,255,255,0.3)] hover:brightness-110',
         outline: 'border border-line-strong bg-transparent text-text hover:bg-surface-2',
         accentOutline: 'border border-accent bg-transparent text-accent-hi hover:bg-accent-soft',
         ghost: 'bg-transparent text-text hover:bg-surface-2',

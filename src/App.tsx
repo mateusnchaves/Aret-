@@ -21,6 +21,7 @@ const CardioPage = lazy(() => import('@/routes/CardioPage').then((m) => ({ defau
 const NutritionDayPage = lazy(() => import('@/routes/NutritionDayPage').then((m) => ({ default: m.NutritionDayPage })))
 const DietsPage = lazy(() => import('@/routes/DietsPage').then((m) => ({ default: m.DietsPage })))
 const DietEditPage = lazy(() => import('@/routes/DietEditPage').then((m) => ({ default: m.DietEditPage })))
+const PantheonPage = lazy(() => import('@/routes/PantheonPage').then((m) => ({ default: m.PantheonPage })))
 const ProfilePage = lazy(() => import('@/routes/ProfilePage').then((m) => ({ default: m.ProfilePage })))
 
 const queryClient = new QueryClient({
@@ -62,6 +63,7 @@ const router = createBrowserRouter([
               { path: 'treino/fichas/nova', element: <WorkoutEditPage /> },
               { path: 'treino/fichas/:id', element: <WorkoutEditPage /> },
               { path: 'treino/exercicios/:id', element: <ExercisePage /> },
+              { path: 'treino/panteao', element: <PantheonPage /> },
               { path: 'cardio', element: <CardioPage /> },
               { path: 'alimentacao', element: <NutritionDayPage /> },
               { path: 'alimentacao/dietas', element: <DietsPage /> },
