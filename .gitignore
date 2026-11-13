@@ -28,5 +28,5 @@ dist-ssr
 .env.local
 .env.*.local
 
-# Claude Code (config local da máquina)
-.claude/settings.local.json
+# Claude Code (configuração local, fora do repositório)
+.claude/
