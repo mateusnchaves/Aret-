@@ -178,7 +178,7 @@ function FinalCta({ cta }: { cta: { to: string; label: string } }) {
         <div
           onPointerMove={tilt}
           onPointerLeave={reset}
-          className="gold-edge marble relative isolate grid items-center gap-10 overflow-hidden rounded-[36px] border border-line bg-surface/60 px-6 py-14 md:grid-cols-[1.3fr_1fr] md:px-14 md:py-20"
+          className="gold-edge stone relative isolate grid items-center gap-10 overflow-hidden rounded-[36px] border border-line bg-surface/60 px-6 py-14 md:grid-cols-[1.3fr_1fr] md:px-14 md:py-20"
         >
           <Aurora />
           <LeafBurst />

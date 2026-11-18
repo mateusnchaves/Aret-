@@ -48,7 +48,7 @@ function Cell({ children, className, delay }: { children: ReactNode; className?:
     <Reveal delay={delay} className={cn('h-full', className)}>
       <article
         onPointerMove={trackPointer}
-        className="spotlight marble flex h-full flex-col gap-5 overflow-hidden rounded-[26px] border border-line bg-surface/80 p-6 transition-[border-color,transform] duration-300 hover:-translate-y-0.5 hover:border-laurel/35 md:p-7"
+        className="spotlight stone flex h-full flex-col gap-5 overflow-hidden rounded-[26px] border border-line bg-surface/80 p-6 transition-[border-color,transform] duration-300 hover:-translate-y-0.5 hover:border-laurel/35 md:p-7"
       >
         {children}
       </article>
@@ -220,11 +220,11 @@ function ConstancyCell() {
   return (
     <>
       <CellHead title="Grade de constância" text="Doze semanas de treino, cardio e dieta num olhar só." />
-      <div ref={ref} className="mt-auto grid grid-flow-col grid-rows-7 gap-1.5" aria-hidden="true">
+      <div ref={ref} className="mt-auto grid w-fit grid-flow-col grid-rows-7 gap-1.5" aria-hidden="true">
         {GRID.map((level, i) => (
           <span
             key={i}
-            className={cn('aspect-square rounded-[4px]', TONES[level], inView ? 'animate-[cell-in_400ms_ease-out_both]' : 'opacity-0')}
+            className={cn('size-3.5 rounded-[3px] sm:size-4', TONES[level], inView ? 'animate-[cell-in_400ms_ease-out_both]' : 'opacity-0')}
             style={{ animationDelay: `${Math.floor(i / 7) * 55 + (i % 7) * 18}ms` }}
           />
         ))}

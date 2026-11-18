@@ -335,13 +335,9 @@ dialog::backdrop {
   mix-blend-mode: overlay;
 }
 
-/* Veios de mármore, bem sutis, por baixo do conteúdo dos cartões. */
-@utility marble {
-  background-image:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='400'%3E%3Cfilter id='m'%3E%3CfeTurbulence type='turbulence' baseFrequency='0.006 0.022' numOctaves='4' seed='7'/%3E%3CfeColorMatrix values='0 0 0 0 0.95 0 0 0 0 0.93 0 0 0 0 0.89 0 0 0 -0.4 0.15'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23m)'/%3E%3C/svg%3E"),
-    linear-gradient(160deg, rgb(255 255 255 / 0.025), transparent 60%);
-  background-size: 600px 400px, 100% 100%;
-  background-blend-mode: soft-light, normal;
+/* Acabamento de pedra polida: uma luz suave vinda de cima, sem ruído. */
+@utility stone {
+  background-image: linear-gradient(180deg, rgb(255 255 255 / 0.04), transparent 45%);
 }
 
 /* Reflexo de metal: uma faixa de luz cruza o ouro ao passar o mouse e, de tempos em tempos, sozinha. */

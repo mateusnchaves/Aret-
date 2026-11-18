@@ -129,7 +129,7 @@ export function Demo() {
 
 function DemoCard({ children, className }: { children: ReactNode; className?: string }) {
   return (
-    <div className={cn('gold-edge marble flex flex-col gap-5 rounded-[26px] border border-line bg-bg/70 p-5 shadow-[0_30px_70px_-20px_rgba(0,0,0,0.7)] md:p-6', className)}>
+    <div className={cn('gold-edge stone flex flex-col gap-5 rounded-[26px] border border-line bg-bg/70 p-5 shadow-[0_30px_70px_-20px_rgba(0,0,0,0.7)] md:p-6', className)}>
       {children}
     </div>
   )
