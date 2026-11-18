@@ -18,10 +18,10 @@ Progressão de carga, cardio e alimentação num PWA feito para a academia.
 
 <br />
 
-<img src="docs/screenshots/inicio.jpg" width="200" alt="Início: ágon de hoje, coroa da semana e disciplina" />&nbsp;
-<img src="docs/screenshots/progressao.jpg" width="200" alt="Progressão de um exercício com medalha de recorde e gráfico em degraus" />&nbsp;
-<img src="docs/screenshots/recorde.jpg" width="200" alt="Tela de novo recorde com coroa de louros" />&nbsp;
-<img src="docs/screenshots/alimentacao.jpg" width="200" alt="Diário de alimentação com anel de calorias e colunas de macros" />
+<img src="public/landing/inicio.jpg" width="200" alt="Início: ágon de hoje, coroa da semana e disciplina" />&nbsp;
+<img src="public/landing/progressao.jpg" width="200" alt="Progressão de um exercício com medalha de recorde e gráfico em degraus" />&nbsp;
+<img src="public/landing/recorde.jpg" width="200" alt="Tela de novo recorde com coroa de louros" />&nbsp;
+<img src="public/landing/alimentacao.jpg" width="200" alt="Diário de alimentação com anel de calorias e colunas de macros" />
 
 </div>
 

@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from 'react'
-import { Navigate } from 'react-router'
+import { Link, Navigate, useSearchParams } from 'react-router'
 import { Logo, Meander } from '@/components/brand'
 import { IconGoogle } from '@/components/icons'
 import { Button } from '@/components/ui/button'
@@ -20,7 +20,8 @@ const ERRORS: Record<string, string> = {
 
 export function LoginPage() {
   const { session } = useAuth()
-  const [mode, setMode] = useState<Mode>('signin')
+  const [params] = useSearchParams()
+  const [mode, setMode] = useState<Mode>(params.get('modo') === 'cadastro' ? 'signup' : 'signin')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [busy, setBusy] = useState(false)
@@ -130,6 +131,11 @@ export function LoginPage() {
           >
             {mode === 'signin' ? 'Criar conta' : 'Entrar'}
           </Button>
+        </p>
+        <p className="m-0 text-center text-sm">
+          <Link to="/sobre" className="text-muted underline-offset-4 hover:text-text-2 hover:underline">
+            O que é o Areté?
+          </Link>
         </p>
       </div>
     </main>

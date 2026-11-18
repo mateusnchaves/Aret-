@@ -8,6 +8,7 @@ import { useAuth } from '@/features/auth/context'
 import { useProfile } from '@/features/data'
 import { isSupabaseConfigured } from '@/lib/supabase'
 import { HomePage } from '@/routes/HomePage'
+import { LandingPage } from '@/routes/LandingPage'
 import { LoginPage } from '@/routes/LoginPage'
 import { NotFoundPage, SetupPage } from '@/routes/misc'
 import { OnboardingPage } from '@/routes/OnboardingPage'
@@ -30,11 +31,23 @@ const queryClient = new QueryClient({
   },
 })
 
+/** Aberto como app instalado (PWA), e não numa aba do navegador. */
+function isInstalledApp() {
+  return (
+    window.matchMedia?.('(display-mode: standalone)').matches ||
+    (navigator as Navigator & { standalone?: boolean }).standalone === true
+  )
+}
+
 function RequireAuth() {
   const { session, loading } = useAuth()
   const location = useLocation()
   if (loading) return <Spinner />
-  if (!session) return <Navigate to="/login" replace state={{ from: location.pathname }} />
+  if (!session) {
+    // Quem chega pelo link vê a apresentação; o app instalado vai direto ao login.
+    if (location.pathname === '/' && !isInstalledApp()) return <LandingPage />
+    return <Navigate to="/login" replace state={{ from: location.pathname }} />
+  }
   return <Outlet />
 }
 
@@ -48,6 +61,7 @@ function RequireOnboarding() {
 
 const router = createBrowserRouter([
   { path: '/login', element: <LoginPage /> },
+  { path: '/sobre', element: <LandingPage /> },
   {
     element: <RequireAuth />,
     children: [
