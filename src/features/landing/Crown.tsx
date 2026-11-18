@@ -91,8 +91,10 @@ export function CrownSection() {
           <div className="absolute inset-0 flex flex-col items-center justify-center" aria-live="polite">
             {golden ? (
               <div key="gold" className="flex animate-[laurel-in_700ms_cubic-bezier(0.2,0.9,0.3,1.2)_both] flex-col items-center gap-2">
-                <img src="/icons/coin.svg" alt="" width={120} height={120} className="drop-shadow-[0_0_30px_rgba(216,180,90,0.55)]" />
-                <span className="inscription text-sm font-bold tracking-[0.3em] text-bronze">GLÓRIA</span>
+                <span className="gold-sheen rounded-full drop-shadow-[0_0_30px_rgba(216,180,90,0.55)]">
+                  <img src="/icons/coin.svg" alt="" width={120} height={120} className="block" />
+                </span>
+                <span className="inscription text-gold text-sm font-bold tracking-[0.3em]">GLÓRIA</span>
               </div>
             ) : (
               <div key="count" className="flex flex-col items-center">

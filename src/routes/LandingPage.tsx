@@ -3,12 +3,15 @@ import { Link } from 'react-router'
 import { CountUp, Logo, Meander } from '@/components/brand'
 import { Button } from '@/components/ui/button'
 import { useAuth } from '@/features/auth/context'
+import { Grain, LaurelRain, LeafBurst, OlympusProgress } from '@/features/landing/Ambient'
 import { Bento } from '@/features/landing/Bento'
+import { MintSection } from '@/features/landing/Coin'
 import { CrownSection } from '@/features/landing/Crown'
 import { Demo } from '@/features/landing/Demo'
 import { Faq } from '@/features/landing/Faq'
 import { Gallery } from '@/features/landing/Gallery'
 import { Hero } from '@/features/landing/Hero'
+import { StatueSection } from '@/features/landing/Statue'
 import { useInView } from '@/features/landing/hooks'
 import { Aurora, Reveal } from '@/features/landing/parts'
 import { cn } from '@/lib/cn'
@@ -20,6 +23,7 @@ const NAV = [
   { href: '#demo', label: 'Demo' },
   { href: '#coroa', label: 'Coroa' },
   { href: '#recursos', label: 'Recursos' },
+  { href: '#moeda', label: 'Sua moeda' },
   { href: '#duvidas', label: 'Dúvidas' },
 ]
 
@@ -30,6 +34,9 @@ export function LandingPage() {
 
   return (
     <div className="min-h-dvh overflow-x-clip bg-bg text-text">
+      <Grain />
+      <OlympusProgress />
+      <LaurelRain />
       <Nav cta={cta} signedIn={!!session} />
       <main>
         <Hero cta={cta} />
@@ -38,7 +45,9 @@ export function LandingPage() {
         <CrownSection />
         <Bento />
         <Quote />
+        <StatueSection />
         <Gallery />
+        <MintSection />
         <Faq />
         <FinalCta cta={cta} />
       </main>
@@ -169,10 +178,11 @@ function FinalCta({ cta }: { cta: { to: string; label: string } }) {
         <div
           onPointerMove={tilt}
           onPointerLeave={reset}
-          className="gold-edge relative isolate grid items-center gap-10 overflow-hidden rounded-[36px] border border-line bg-surface/60 px-6 py-14 md:grid-cols-[1.3fr_1fr] md:px-14 md:py-20"
+          className="gold-edge marble relative isolate grid items-center gap-10 overflow-hidden rounded-[36px] border border-line bg-surface/60 px-6 py-14 md:grid-cols-[1.3fr_1fr] md:px-14 md:py-20"
         >
           <Aurora />
-          <div className="flex flex-col items-start gap-6">
+          <LeafBurst />
+          <div className="relative flex flex-col items-start gap-6">
             <h2 className="m-0 max-w-[16ch] font-display text-[38px] leading-[1.05] font-semibold tracking-[-0.015em] md:text-[56px]">
               Sua evolução começa no próximo treino.
             </h2>
@@ -190,15 +200,17 @@ function FinalCta({ cta }: { cta: { to: string; label: string } }) {
               </Button>
             </div>
           </div>
-          <div className="mx-auto [perspective:900px]">
+          <div className="relative mx-auto [perspective:900px]">
             <div ref={coin} className="transition-transform duration-300 ease-out" style={{ transformStyle: 'preserve-3d' }}>
-              <img
-                src="/icons/coin.svg"
-                alt="A moeda do Areté, uma tetradracma com um perfil laureado"
-                width={240}
-                height={240}
-                className="w-[180px] animate-[bob_7s_ease-in-out_infinite] drop-shadow-[0_0_50px_rgba(216,180,90,0.45)] md:w-[240px]"
-              />
+              <div className="gold-sheen animate-[bob_7s_ease-in-out_infinite] rounded-full drop-shadow-[0_0_50px_rgba(216,180,90,0.45)]">
+                <img
+                  src="/icons/coin.svg"
+                  alt="A moeda do Areté, uma tetradracma com um perfil laureado"
+                  width={240}
+                  height={240}
+                  className="block w-[180px] md:w-[240px]"
+                />
+              </div>
             </div>
           </div>
         </div>

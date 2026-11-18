@@ -129,7 +129,7 @@ export function Demo() {
 
 function DemoCard({ children, className }: { children: ReactNode; className?: string }) {
   return (
-    <div className={cn('gold-edge flex flex-col gap-5 rounded-[26px] border border-line bg-bg/70 p-5 shadow-[0_30px_70px_-20px_rgba(0,0,0,0.7)] md:p-6', className)}>
+    <div className={cn('gold-edge marble flex flex-col gap-5 rounded-[26px] border border-line bg-bg/70 p-5 shadow-[0_30px_70px_-20px_rgba(0,0,0,0.7)] md:p-6', className)}>
       {children}
     </div>
   )
@@ -168,7 +168,7 @@ function TrainingDemo() {
     <DemoCard>
       <div className="flex items-center gap-4">
         <div key={top.mark} className="animate-[laurel-in_520ms_cubic-bezier(0.2,0.9,0.3,1.2)_both]">
-          <Medal size={74}>
+          <Medal size={74} className="gold-sheen">
             <span className="font-display text-[22px] leading-none font-semibold tabular">{formatKg(top.load)}</span>
             <span className="text-[10px] font-bold tracking-[0.15em]">KG</span>
           </Medal>

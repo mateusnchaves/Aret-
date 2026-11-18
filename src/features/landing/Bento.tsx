@@ -48,7 +48,7 @@ function Cell({ children, className, delay }: { children: ReactNode; className?:
     <Reveal delay={delay} className={cn('h-full', className)}>
       <article
         onPointerMove={trackPointer}
-        className="spotlight flex h-full flex-col gap-5 overflow-hidden rounded-[26px] border border-line bg-surface/80 p-6 transition-[border-color,transform] duration-300 hover:-translate-y-0.5 hover:border-laurel/35 md:p-7"
+        className="spotlight marble flex h-full flex-col gap-5 overflow-hidden rounded-[26px] border border-line bg-surface/80 p-6 transition-[border-color,transform] duration-300 hover:-translate-y-0.5 hover:border-laurel/35 md:p-7"
       >
         {children}
       </article>
@@ -191,7 +191,7 @@ function PantheonCell() {
       <div className="mt-auto flex items-end justify-around gap-2">
         {medals.map((m, i) => (
           <div key={m.name} className={cn('flex flex-col items-center gap-2 transition-transform duration-300 hover:-translate-y-1', i === 0 && 'order-2 -translate-y-2')}>
-            <Medal size={i === 0 ? 64 : 52}>
+            <Medal size={i === 0 ? 64 : 52} className="gold-sheen">
               <span className={cn('font-display leading-none font-bold', i === 0 ? 'text-lg' : 'text-[15px]')}>{m.load}</span>
               <span className="text-[8px] font-bold tracking-[0.12em]">KG</span>
             </Medal>

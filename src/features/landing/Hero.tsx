@@ -109,7 +109,7 @@ function HeroVisual() {
       </div>
 
       <Chip depth={46} enter={520} bob={0} className="top-[9%] -left-1 sm:left-0">
-        <Medal size={42}>
+        <Medal size={42} className="gold-sheen">
           <span className="font-display text-[15px] leading-none font-bold">60</span>
         </Medal>
         <div>
