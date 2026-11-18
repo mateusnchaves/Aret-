@@ -1,5 +1,5 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { lazy } from 'react'
+import { lazy, Suspense } from 'react'
 import { createBrowserRouter, Navigate, Outlet, RouterProvider, useLocation } from 'react-router'
 import { AppShell } from '@/components/layout'
 import { Spinner } from '@/components/ui/surface'
@@ -8,7 +8,6 @@ import { useAuth } from '@/features/auth/context'
 import { useProfile } from '@/features/data'
 import { isSupabaseConfigured } from '@/lib/supabase'
 import { HomePage } from '@/routes/HomePage'
-import { LandingPage } from '@/routes/LandingPage'
 import { LoginPage } from '@/routes/LoginPage'
 import { NotFoundPage, SetupPage } from '@/routes/misc'
 import { OnboardingPage } from '@/routes/OnboardingPage'
@@ -23,6 +22,7 @@ const NutritionDayPage = lazy(() => import('@/routes/NutritionDayPage').then((m)
 const DietsPage = lazy(() => import('@/routes/DietsPage').then((m) => ({ default: m.DietsPage })))
 const DietEditPage = lazy(() => import('@/routes/DietEditPage').then((m) => ({ default: m.DietEditPage })))
 const PantheonPage = lazy(() => import('@/routes/PantheonPage').then((m) => ({ default: m.PantheonPage })))
+const LandingPage = lazy(() => import('@/routes/LandingPage').then((m) => ({ default: m.LandingPage })))
 const ProfilePage = lazy(() => import('@/routes/ProfilePage').then((m) => ({ default: m.ProfilePage })))
 
 const queryClient = new QueryClient({
@@ -30,6 +30,14 @@ const queryClient = new QueryClient({
     queries: { staleTime: 30_000, retry: 1, refetchOnWindowFocus: true },
   },
 })
+
+function Landing() {
+  return (
+    <Suspense fallback={<div className="min-h-dvh bg-bg" />}>
+      <LandingPage />
+    </Suspense>
+  )
+}
 
 /** Aberto como app instalado (PWA), e não numa aba do navegador. */
 function isInstalledApp() {
@@ -45,7 +53,7 @@ function RequireAuth() {
   if (loading) return <Spinner />
   if (!session) {
     // Quem chega pelo link vê a apresentação; o app instalado vai direto ao login.
-    if (location.pathname === '/' && !isInstalledApp()) return <LandingPage />
+    if (location.pathname === '/' && !isInstalledApp()) return <Landing />
     return <Navigate to="/login" replace state={{ from: location.pathname }} />
   }
   return <Outlet />
@@ -61,7 +69,7 @@ function RequireOnboarding() {
 
 const router = createBrowserRouter([
   { path: '/login', element: <LoginPage /> },
-  { path: '/sobre', element: <LandingPage /> },
+  { path: '/sobre', element: <Landing /> },
   {
     element: <RequireAuth />,
     children: [

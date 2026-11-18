@@ -218,3 +218,30 @@ export const IconShare = (p: IconProps) => (
     <path d="M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6" />
   </Icon>
 )
+
+export const IconWifiOff = (p: IconProps) => (
+  <Icon {...p}>
+    <path d="M2 2l20 20" />
+    <path d="M8.5 16.4a5 5 0 0 1 7 0" />
+    <path d="M5 12.9a10 10 0 0 1 5.2-2.8" />
+    <path d="M19 12.9a10 10 0 0 0-2.4-1.7" />
+    <path d="M2 8.8a15 15 0 0 1 4.2-2.6" />
+    <path d="M22 8.8a15 15 0 0 0-11.3-3.7" />
+    <path d="M12 20h.01" />
+  </Icon>
+)
+
+export const IconLock = (p: IconProps) => (
+  <Icon {...p}>
+    <rect x="4" y="11" width="16" height="10" rx="2" />
+    <path d="M8 11V7a4 4 0 0 1 8 0v4" />
+  </Icon>
+)
+
+export const IconDownload = (p: IconProps) => (
+  <Icon {...p}>
+    <path d="M12 3v12" />
+    <path d="M7 10l5 5 5-5" />
+    <path d="M5 21h14" />
+  </Icon>
+)
