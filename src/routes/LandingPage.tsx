@@ -3,7 +3,7 @@ import { Link } from 'react-router'
 import { CountUp, Logo, Meander } from '@/components/brand'
 import { Button } from '@/components/ui/button'
 import { useAuth } from '@/features/auth/context'
-import { Grain, LaurelRain, LeafBurst, OlympusProgress } from '@/features/landing/Ambient'
+import { Grain, LaurelRain, LeafBurst, ScrollProgress } from '@/features/landing/Ambient'
 import { Bento } from '@/features/landing/Bento'
 import { MintSection } from '@/features/landing/Coin'
 import { CrownSection } from '@/features/landing/Crown'
@@ -35,7 +35,7 @@ export function LandingPage() {
   return (
     <div className="min-h-dvh overflow-x-clip bg-bg text-text">
       <Grain />
-      <OlympusProgress />
+      <ScrollProgress />
       <LaurelRain />
       <Nav cta={cta} signedIn={!!session} />
       <main>
