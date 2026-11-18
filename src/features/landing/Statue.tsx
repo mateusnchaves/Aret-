@@ -110,7 +110,8 @@ const LEAVES = [
   [119, 59, 34],
 ]
 
-function Bust() {
+/** `half`: o ouro só cobre o lado iluminado, como uma estátua sendo dourada. */
+export function Bust({ half, label = 'Busto clássico que passa de pedra a ouro' }: { half?: boolean; label?: string }) {
   const shape = (fill: string, stroke = 'none') => (
     <g fill={fill} stroke={stroke} strokeWidth="1.6" strokeLinejoin="round">
       <path d={HEAD} />
@@ -120,7 +121,7 @@ function Bust() {
     </g>
   )
   return (
-    <svg viewBox="30 20 150 230" className="h-auto w-full overflow-visible" role="img" aria-label="Busto clássico que passa de pedra a ouro">
+    <svg viewBox="30 20 150 230" className="h-auto w-full overflow-visible" role="img" aria-label={label}>
       <defs>
         <linearGradient id="st-marble" x1="0" y1="0" x2="1" y2="1">
           <stop offset="0" stopColor="#efe9df" />
@@ -141,6 +142,18 @@ function Bust() {
           <feTurbulence type="fractalNoise" baseFrequency="0.09" numOctaves="2" seed="2" />
           <feDisplacementMap in="SourceGraphic" scale="9" />
         </filter>
+        {half && (
+          <>
+            <linearGradient id="st-gild-grad" x1="1" y1="0" x2="0.15" y2="0.85">
+              <stop offset="0.35" stopColor="#fff" />
+              <stop offset="0.58" stopColor="#fff" stopOpacity="0.7" />
+              <stop offset="0.74" stopColor="#fff" stopOpacity="0" />
+            </linearGradient>
+            <mask id="st-gild" maskUnits="userSpaceOnUse" x="30" y="20" width="150" height="230">
+              <rect x="30" y="20" width="150" height="230" fill="url(#st-gild-grad)" />
+            </mask>
+          </>
+        )}
       </defs>
 
       {/* Pedestal com a inscrição. */}
@@ -162,7 +175,7 @@ function Bust() {
       </g>
 
       {/* Ouro por cima do mármore, no fim. */}
-      <g style={fade(0.62, 3)} className="mix-blend-normal">
+      <g style={fade(0.62, 3)} mask={half ? 'url(#st-gild)' : undefined}>
         {shape('url(#st-gold)', '#5a3f12')}
         <path d="M122 90 C125 87.5 129.5 87.5 132 90 C129 92 125 92 122 90 Z" fill="#4a3410" />
         <path d="M84 104 C80 108 80 118 86 122 C90 118 90 108 84 104 Z" fill="none" stroke="#5a3f12" strokeWidth="2.2" />
@@ -174,11 +187,11 @@ function Bust() {
           key={`${cx}-${cy}`}
           cx={cx}
           cy={cy}
-          rx="4.6"
-          ry="10.5"
-          fill="#6f9e63"
-          stroke="#2f4a2a"
-          strokeWidth="1"
+          rx="3.4"
+          ry="9.5"
+          fill="#5e8a52"
+          stroke="#2a4226"
+          strokeWidth="0.8"
           transform={`rotate(${r} ${cx} ${cy})`}
           style={fade(0.42 + i * 0.05, 14)}
         />
